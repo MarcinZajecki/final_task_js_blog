@@ -43,21 +43,43 @@ for (let singleLink of links) {
     singleLink.addEventListener('click', titleClickHandler);
 }
 
+{
+    const optArticleSelector = '.post',
+        optTitleSelector = '.post-title',
+        optTitleListSelector = '.titles';
 
+    function generateTitleLinks(){
+        console.log('the function generateTitleLinks has been executed');
+        /* remove contents of titleList */
+        document.querySelector(optTitleListSelector).innerHTML = '';
+        /* get the article id */ /* find the title element */
+        const articles = document.querySelectorAll(optArticleSelector);
+        for (let singleArticle of articles) {
+            console.log(singleArticle, ' -> single article')
+            /* get the article id */
+            const articleId = singleArticle.getAttribute('id');
+            console.log(articleId, ' -> single article ID');
+            /* find the title element  - probably to remove, creating Node list ??????*/
+            const articleTitle = singleArticle.querySelector(optTitleSelector);
+            console.log(articleTitle, ' -> singleArticle title');
+            const articleTitleString = articleTitle.innerHTML;
+            console.log(articleTitleString, ' -> article title string');
+            /* create HTML of the link */ 
+            const createdTitleLi = document.createElement('li');
+            const createdArticleLink = document.createElement('a');
+            createdArticleLink.href = articleId;
+            const titleString = document.createElement('span');
+            titleString.innerHTML = articleTitleString;
+            createdArticleLink.appendChild(titleString);
+            createdTitleLi.appendChild(createdArticleLink);
+            console.log(createdTitleLi, ' -> created article link as li');
+            /* insert link into titleList */
+            document.querySelector(optTitleListSelector).appendChild(createdTitleLi);
+        }
 
+    }
 
+    generateTitleLinks();
+}
 
-  /* remove class 'active' from all article links  CHECK 
-
-   add class 'active' to the clicked link  CHECK
-
-   remove class 'active' from all articles CHECK
-
-   get 'href' attribute from the clicked link CHECK
-
-   find the correct article using the selector (value of 'href' attribute) CHECK
-
-   add class 'active' to the correct article CHECK*/
-
-
-
+ 
