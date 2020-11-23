@@ -29,7 +29,7 @@ const titleClickHandler = function (event) {
     // Selecting article & displaying
     const clickedLinkAttribute = clickedElement.getAttribute('href');
     console.log(clickedLinkAttribute, ' -> link`s href attribute');
-    const selectedArticle = document.getElementById(clickedLinkAttribute);
+    const selectedArticle = document.querySelector(clickedLinkAttribute);
     console.log(selectedArticle, ' -> selected article');
     selectedArticle.classList.add('active');
 }
@@ -43,9 +43,11 @@ const titleClickHandler = function (event) {
     function generateTitleLinks(){
         console.log('the function generateTitleLinks has been executed');
         /* remove contents of titleList */
-        document.querySelector(optTitleListSelector).innerHTML = '';
+        const titleLink = document.querySelector(optTitleListSelector);
+        titleLink.innerHTML = '';
         /* get the article id */ /* find the title element */
         const articles = document.querySelectorAll(optArticleSelector);
+        let html = '';
         for (let singleArticle of articles) {
             console.log(singleArticle, ' -> single article')
             /* get the article id */
@@ -57,17 +59,14 @@ const titleClickHandler = function (event) {
             const articleTitleString = articleTitle.innerHTML;
             console.log(articleTitleString, ' -> article title string');
             /* create HTML of the link */ 
-            const createdTitleLi = document.createElement('li');
-            const createdArticleLink = document.createElement('a');
-            createdArticleLink.href = articleId;
-            const titleString = document.createElement('span');
-            titleString.innerHTML = articleTitleString;
-            createdArticleLink.appendChild(titleString);
-            createdTitleLi.appendChild(createdArticleLink);
-            console.log(createdTitleLi, ' -> created article link as li');
-            /* insert link into titleList */
-            document.querySelector(optTitleListSelector).appendChild(createdTitleLi);
+            const linkHTML = '<li><a href="#' + articleId + '"<span>' + articleTitleString + '</span></a></li>';
+            console.log(linkHTML, ' -> this is a HTML link');
+            html = html + linkHTML;
+            console.log(html, ' -> html variable');
         }
+        /* insert link into titleList */  
+        titleLink.innerHTML = html;
+        
         // Articles' title links from a sidebar 
         const links = document.querySelectorAll('.titles a');
         console.log(links, ' -> all the articles title links from a sidebar');
