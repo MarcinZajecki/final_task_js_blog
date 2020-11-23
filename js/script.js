@@ -21,7 +21,7 @@ const titleClickHandler = function (event) {
     clickedElement.classList.add('active');
     // All active articles
     const activeArticles = document.querySelectorAll('article.active');
-    console.log(activeArticles, ' -> active articles before using function titleClickHaldler');
+    console.log(activeArticles, ' -> active articles');
     // Loop - a single active article - removing class 'active'
     for (let activeArticle of activeArticles) {
         activeArticle.classList.remove('active');
@@ -29,19 +29,11 @@ const titleClickHandler = function (event) {
     // Selecting article & displaying
     const clickedLinkAttribute = clickedElement.getAttribute('href');
     console.log(clickedLinkAttribute, ' -> link`s href attribute');
-    const selectedArticle = document.querySelector(clickedLinkAttribute);
+    const selectedArticle = document.getElementById(clickedLinkAttribute);
     console.log(selectedArticle, ' -> selected article');
     selectedArticle.classList.add('active');
 }
 
-// Articles' title links from a sidebar 
-const links = document.querySelectorAll('.titles a');
-console.log(links, ' -> all the articles title links from a sidebar');
-// Displaying selected articles
-for (let singleLink of links) {
-    console.log(singleLink, ' -> a single link from a sidebar');
-    singleLink.addEventListener('click', titleClickHandler);
-}
 
 {
     const optArticleSelector = '.post',
@@ -59,7 +51,7 @@ for (let singleLink of links) {
             /* get the article id */
             const articleId = singleArticle.getAttribute('id');
             console.log(articleId, ' -> single article ID');
-            /* find the title element  - probably to remove, creating Node list ??????*/
+            /* find the title element*/
             const articleTitle = singleArticle.querySelector(optTitleSelector);
             console.log(articleTitle, ' -> singleArticle title');
             const articleTitleString = articleTitle.innerHTML;
@@ -76,7 +68,14 @@ for (let singleLink of links) {
             /* insert link into titleList */
             document.querySelector(optTitleListSelector).appendChild(createdTitleLi);
         }
-
+        // Articles' title links from a sidebar 
+        const links = document.querySelectorAll('.titles a');
+        console.log(links, ' -> all the articles title links from a sidebar');
+        // Displaying selected articles
+        for (let singleLink of links) {
+            console.log(singleLink, ' -> a single link from a sidebar');
+            singleLink.addEventListener('click', titleClickHandler);
+        }
     }
 
     generateTitleLinks();
