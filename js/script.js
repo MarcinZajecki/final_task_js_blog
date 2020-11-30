@@ -40,8 +40,7 @@ const titleClickHandler = function (event){
     optTitleSelector = `.post-title`,
     optTitleListSelector = `.titles`,
     optArticleTagsSelector = `.post-tags .list`,
-    optAuthorSelector = `.post-author`,
-    optAuthorsListSelector = `.list .authors`;
+    optAuthorSelector = `.post-author`;
 
   function generateTitleLinks(customSelector = ``){
     console.log(`the function generateTitleLinks has been executed`);
@@ -174,12 +173,12 @@ const titleClickHandler = function (event){
     for (let singleArticle of articles){
       const authorsArticle = singleArticle.querySelector(optAuthorSelector);
       authorsArticle.innerHTML = ``;
-      const authorsArticleString = authorsArticle.dataset.author;
+      const authorsArticleString = singleArticle.dataset.author;
       const authorsArray = authorsArticleString.split(` `);
       let html = ``;
       for (let singleAuthorArray of authorsArray){
         const fixAuthorString = singleAuthorArray.replace(`_`, ` `);
-        const htmlAuthor = `<a href="#${singleAuthorArray}"><span>${fixAuthorString}</span></a> `;
+        const htmlAuthor = `<a href="#auth-${singleAuthorArray}"><span>${fixAuthorString}</span></a> `;
         html = html + htmlAuthor;
       }
       authorsArticle.innerHTML = html;
@@ -188,15 +187,26 @@ const titleClickHandler = function (event){
   generateAuthors();
 
   function authorsClickHandler(event){
+    console.log(`function authorsClickHandler has been executed`);
     event.preventDefault();
     const clickedElement = this;
     console.log(clickedElement, ` to jest this z autorów`);
-
+    const href = clickedElement.getAttribute(`href`);
+    const tag = href.substring(6);
+    const authorsLinkActive = document.querySelectorAll(`a.active[href^="#auth-"]`);
+    for (let singleAuthorsLinkActive of authorsLinkActive){
+      singleAuthorsLinkActive.classList.remove(`active`);
+    }
+    const choosenAuthorsLinks = document.querySelectorAll(`a[href="${href}"]`);
+    for (let singleChoosenAuthorLink of choosenAuthorsLinks){
+      singleChoosenAuthorLink.classList.add(`active`);
+    }
+    generateTitleLinks(`[data-author~=${tag}]`);
   }
 
   function addClickListenerToAuthors(){
-    const authorsArticleLink = document.querySelectorAll(` ${optAuthorsListSelector} a`);
-    console.log(authorsArticleLink, `mmmmmmmmmmmmmmmmmmmmmmmmm`);
+    console.log(`function addClickListenerToAuthors has been executed`);
+    const authorsArticleLink = document.querySelectorAll(`a[href^="#auth-"]`);
     for (let singleAuthorArticleLink of authorsArticleLink){
       singleAuthorArticleLink.addEventListener(`click`, authorsClickHandler);
     }
