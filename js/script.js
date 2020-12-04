@@ -7,7 +7,7 @@ const templates = {
   authorLink: Handlebars.compile(document.querySelector('#template-author-link').innerHTML),
   tagCloudLink: Handlebars.compile(document.querySelector('#template-tag-cloud-link').innerHTML),
   authCloudLink: Handlebars.compile(document.querySelector('#template-author-cloud-link').innerHTML)
-}
+};
 
 {
   const opt = {
@@ -135,7 +135,7 @@ const templates = {
       /* START LOOP: for each tag */
       for (const singleTagArray of tagsArrays){
       /* generate HTML of the link */
-        const tagLinkHTMLData = {id: singleTagArray, tagName: singleTagArray}
+        const tagLinkHTMLData = {id: singleTagArray, tagName: singleTagArray};
         const tagLinkHtml = templates.tagLink(tagLinkHTMLData);
         /* add generated code to html variable */
         html = html + tagLinkHtml;
@@ -160,7 +160,7 @@ const templates = {
         tag: tag,
         count: allTags[tag],
         className: calculateTagClass(allTags[tag], tagsParams),
-      })
+      });
     }
     /*find list of tags in right column */
     const tagList = document.querySelector(opt.list.tag);
@@ -237,7 +237,7 @@ const templates = {
       let html = '';
       for (const singleAuthorArray of authorsArray){
         const fixAuthorString = singleAuthorArray.replace('_', ' ');
-        const authorLinkHtmlData = {id: singleAuthorArray, authorName: fixAuthorString}
+        const authorLinkHtmlData = {id: singleAuthorArray, authorName: fixAuthorString};
         const htmlAuthor = templates.authorLink(authorLinkHtmlData);
         html = html + htmlAuthor;
         if(!allAuthors[singleAuthorArray]) allAuthors[singleAuthorArray] = 1;
@@ -255,7 +255,7 @@ const templates = {
         authClassName: calculateAuthorClass(allAuthors[singleAuthor], authorsParams),
         authName: singleAuthor,
         authString: fixAuthorListString,
-      })
+      });
     }
     authorsList.innerHTML = templates.authCloudLink(authorLinkHtmlData);
 
