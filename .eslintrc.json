@@ -26,9 +26,10 @@
       ],
       "no-console": [
           "off"
-      ],
-      "globals": {
-        "Handlebars": false
-      }
+      ]
+
+  },
+  "globals": {
+    "Handlebars": false
   }
 }
