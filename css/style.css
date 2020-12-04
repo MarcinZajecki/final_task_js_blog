@@ -1,5 +1,4 @@
 @import url("https://fonts.googleapis.com/css?family=Oswald:400,600|Sacramento|Source+Sans+Pro:300&subset=latin-ext");
-
 /* Variables */
 /* Global */
 *,
@@ -28,7 +27,6 @@ body {
   font-family: "Oswald", sans-serif;
   font-weight: 600;
 }
-
 .section-title span {
   text-transform: none;
   font-weight: 400;
@@ -37,18 +35,15 @@ body {
 
 /* Layout */
 .wrapper {
-  display: -ms-flexbox;
   display: flex;
   margin-left: 10px;
 }
 
 .sidebar {
-  -ms-flex: 1 0 0px;
   flex: 1 0 0;
 }
 
 .posts {
-  -ms-flex: 2 0 0px;
   flex: 2 0 0;
 }
 
@@ -61,31 +56,22 @@ body {
   border-radius: 5px;
 }
 
-.sidebar .list.tags .tag-size-1,
-.posts .list.tags .tag-size-1 {
+.sidebar .list.tags .tag-size-1 {
   color: red;
 }
-
-.sidebar .list.tags .tag-size-2,
-.posts .list.tags .tag-size-2 {
+.sidebar .list.tags .tag-size-2 {
   color: #dbdb14;
   font-size: 1.1em;
 }
-
-.sidebar .list.tags .tag-size-3,
-.posts .list.tags .tag-size-3 {
+.sidebar .list.tags .tag-size-3 {
   color: blue;
   font-size: 1.2em;
 }
-
-.sidebar .list.tags .tag-size-4,
-.posts .list.tags .tag-size-4 {
+.sidebar .list.tags .tag-size-4 {
   color: green;
   font-size: 1.3em;
 }
-
-.sidebar .list.tags .tag-size-5,
-.posts .list.tags .tag-size-5 {
+.sidebar .list.tags .tag-size-5 {
   color: violet;
   font-size: 1.5em;
 }
@@ -105,7 +91,6 @@ body {
   margin: 0;
   padding: 0;
 }
-
 .list .active {
   font-weight: bold;
 }
@@ -118,27 +103,22 @@ body {
 .authors .author-size-1 {
   color: red;
 }
-
 .authors .author-size-2 {
   color: #dbdb14;
   font-size: 1.1em;
 }
-
 .authors .author-size-3 {
   color: blue;
   font-size: 1.2em;
 }
-
 .authors .author-size-4 {
   color: green;
   font-size: 1.3em;
 }
-
 .authors .author-size-5 {
   color: violet;
   font-size: 1.5em;
 }
-
 .authors li {
   margin-bottom: 12px;
 }
@@ -147,7 +127,6 @@ body {
 .post {
   display: none;
 }
-
 .post.active {
   display: block;
 }
@@ -157,12 +136,8 @@ body {
 }
 
 .post-tags {
-  display: -ms-flexbox;
   display: flex;
 }
-
 .post-tags p {
   margin: 0 10px 0 0;
 }
-
-/*# sourceMappingURL=style.css.map */

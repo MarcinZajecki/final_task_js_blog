@@ -1,6 +1,14 @@
 /* eslint-disable no-inner-declarations */
 'use strict';
 
+const templates = {
+  articleLink: Handlebars.compile(document.querySelector('#template-article-link').innerHTML),
+  tagLink: Handlebars.compile(document.querySelector('#template-tag-link').innerHTML),
+  authorLink: Handlebars.compile(document.querySelector('#template-author-link').innerHTML),
+  tagCloudLink: Handlebars.compile(document.querySelector('#template-tag-cloud-link').innerHTML),
+  authCloudLink: Handlebars.compile(document.querySelector('#template-author-cloud-link').innerHTML)
+}
+
 {
   const opt = {
     select: {
@@ -56,7 +64,8 @@
       const articleTitle = singleArticle.querySelector(opt.select.title);
       const articleTitleString = articleTitle.innerHTML;
       /* create HTML of the link */
-      const linkHTML = `<li><a href="#${articleId}"><span>${articleTitleString}</span></a></li>`;
+      const linkHTMLData = {id: articleId, title: articleTitleString};
+      const linkHTML = templates.articleLink(linkHTMLData);
       html = html + linkHTML;
     }
     /* insert link into titleList */
@@ -86,6 +95,7 @@
     let max = Math.max(...arr);
     const params = {'minimum': min, 'maximum': max};
     return params;
+    // alternative version
     // const params = {max: 0, min: Infinity};
     // for(const tag in tags){
     //   // params.max = Math.max(tags[tag], params.max);
@@ -96,6 +106,7 @@
     // return params;
   }
 
+  // dividing tags to a specific number of class
   function calculateTagClass(count, params){
     // for(let i = 1; i < opt.cloud.classCount + 1; i++){
     //   if (count <= i/opt.cloud.classCount*params.maximum) return opt.cloud.tagPrefix + i;
@@ -124,7 +135,8 @@
       /* START LOOP: for each tag */
       for (const singleTagArray of tagsArrays){
       /* generate HTML of the link */
-        const tagLinkHtml = `<li><a href="#tag-${singleTagArray}"><span>${singleTagArray}</span></a></li> `;
+        const tagLinkHTMLData = {id: singleTagArray, tagName: singleTagArray}
+        const tagLinkHtml = templates.tagLink(tagLinkHTMLData);
         /* add generated code to html variable */
         html = html + tagLinkHtml;
         /*check if this link is NOT already in allTags */
@@ -142,15 +154,18 @@
     // counting a number of times a specific tag occurs
     const tagsParams = calculateTagsParams(allTags);
     /*create variable for all tag links HTML code */
-    let allTagsHtml = '';
+    const allTagsData = {tags: []};
     for (const tag in allTags){
-      const tagListItem = ` <li><a class="` + calculateTagClass(allTags[tag], tagsParams) + `" href="#tag-${tag}"><span>${tag}</span></a></li> `;
-      allTagsHtml += tagListItem;
+      allTagsData.tags.push({
+        tag: tag,
+        count: allTags[tag],
+        className: calculateTagClass(allTags[tag], tagsParams),
+      })
     }
     /*find list of tags in right column */
     const tagList = document.querySelector(opt.list.tag);
-    /*add html from allTagsHtml to tagList */
-    tagList.innerHTML = allTagsHtml;
+    /*add html to tagList */
+    tagList.innerHTML = templates.tagCloudLink(allTagsData);
   }
 
   const tagClickHandler = function (event){
@@ -222,7 +237,8 @@
       let html = '';
       for (const singleAuthorArray of authorsArray){
         const fixAuthorString = singleAuthorArray.replace('_', ' ');
-        const htmlAuthor = ` <a href="#auth-${singleAuthorArray}"><span>${fixAuthorString}</span></a> `;
+        const authorLinkHtmlData = {id: singleAuthorArray, authorName: fixAuthorString}
+        const htmlAuthor = templates.authorLink(authorLinkHtmlData);
         html = html + htmlAuthor;
         if(!allAuthors[singleAuthorArray]) allAuthors[singleAuthorArray] = 1;
         else allAuthors[singleAuthorArray]++;
@@ -232,14 +248,16 @@
     const authorsList = document.querySelector(opt.list.author);
     authorsList.innerHTML ='';
     const authorsParams = calculateAuthorsParams(allAuthors);
-    let authorLinkHtml = '';
+    const authorLinkHtmlData = {authors: []};
     for (const singleAuthor in allAuthors){
-      calculateAuthorClass(allAuthors[singleAuthor], authorsParams);
       const fixAuthorListString = singleAuthor.replace('_', ' ');
-      const htmlAuthorList = `<li><a class = "${calculateAuthorClass(allAuthors[singleAuthor], authorsParams)}" href="#auth-${singleAuthor}"><span>${fixAuthorListString}</span></a></li>`;
-      authorLinkHtml += htmlAuthorList;
+      authorLinkHtmlData.authors.push({
+        authClassName: calculateAuthorClass(allAuthors[singleAuthor], authorsParams),
+        authName: singleAuthor,
+        authString: fixAuthorListString,
+      })
     }
-    authorsList.innerHTML = authorLinkHtml;
+    authorsList.innerHTML = templates.authCloudLink(authorLinkHtmlData);
 
   }
   function authorsClickHandler(event){
